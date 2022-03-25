@@ -1,10 +1,10 @@
 package com.company;
 
 public class Llist {
-    node head;
-    node tail;
+     node head;
 
-    static class node{
+
+     static class node{
         int data;
         node next;
         node(int k){
@@ -12,26 +12,26 @@ public class Llist {
             next = null;
         }
     }
-    public static int size(Llist list){
+    public  int size(){
         int size=0;
-        if (list.head != null) {
-            node currentnode = list.head;
-            while (currentnode != list.tail) {
+        if (head != null) {
+            node currentnode = head;
+            while (currentnode != null) {
                 size++;
                 currentnode = currentnode.next;
             }
         }
         return size;
     }
-    public static void insert(Llist list, int index, int data){
+    public  void insert(int index, int data){
         node new_node = new node(data);
-        if(index>=0 && index<= size(list)){
-            if(list.head == null){
-                list.head=new_node;
-                new_node.next=list.tail;
+        if(index>=0 && index<= size()){
+            if(head == null){
+                head=new_node;
+                new_node.next=null;
             }
             else{
-                node pos =list.head;
+                node pos =head;
                 int i=0;
                 while(i < index-1){
                         pos=pos.next;
@@ -47,29 +47,29 @@ public class Llist {
         }
 
     }
-    public static void add(Llist list , int data){
+    public  void add(int data){
         node n2 = new node(data);
-        if (list.head==null){
-            list.head=n2;
-            n2.next=list.tail;
+        if (head==null){
+            head=n2;
+            n2.next= null;
         }
         else{
-            node last = list.head;
-            while(last.next!=list.tail){
+            node last = head;
+            while(last.next!= null){
                 last=last.next;
             }
             last.next = n2;
-            n2.next=list.tail;
+            n2.next= null;
         }
     }
-    public static void printList(Llist list){
-        if(list.head==null){
+    public void printList(){
+        if(head==null){
             System.out.println("list is empty,can not be printed");
         }
         else{
-            node n = list.head;
+            node n = head;
             System.out.print("linked list:");
-            while(n!=list.tail){
+            while(n!= null){
                 System.out.print(n.data + ", ");
                 n=n.next;
             }
@@ -77,12 +77,12 @@ public class Llist {
         }
 
     }
-    public static int get (Llist list,int index) {
+    public int get(int index) {
         {
-            node cursor = list.head;
+            node cursor = head;
             int x = 0;
-            if (index >= 0 && index <= size(list)) {
-                if (list.head == null) {
+            if (index >= 0 && index <= size()) {
+                if (head == null) {
                     System.out.println("list is empty");
                 } else {
                     int i = 0;
@@ -98,11 +98,11 @@ public class Llist {
             return x;
         }
     }
-    public static void set (Llist list,int index,int data) {
+    public  void set (int index,int data) {
 
-            node cursor = list.head;
-            if (index >= 0 && index <= size(list)) {
-                if (list.head == null) {
+            node cursor = head;
+            if (index >= 0 && index <= size()) {
+                if (head == null) {
                     System.out.println("list is empty");
                 } else {
                     int i = 0;
@@ -117,17 +117,17 @@ public class Llist {
             }
 
     }
-    public static void clear(Llist list){
-        list.head=null;
+    public  void clear(){
+        head=null;
     }
-    public static boolean isEmpty(Llist list){
-        return (list.head==null);
+    public  boolean isEmpty( ){
+        return (head==null);
     }
-    public static void remove (Llist list,int index){
+    public  void remove (int index){
 
-            node cursor = list.head;
-            if (index >= 0 && index <= size(list)) {
-                if (list.head == null) {
+            node cursor = head;
+            if (index >= 0 && index <= size()) {
+                if (head == null) {
                     System.out.println("list is empty");
                 } else {
                     int i = 0;
@@ -144,17 +144,17 @@ public class Llist {
             }
 
     }
-    public static Llist sublist(Llist list,int fromIndex,int toIndex){
+    public  Llist sublist(int fromIndex,int toIndex){
         Llist sublist = new Llist();
-        if(fromIndex>=0 && toIndex>=0 && fromIndex<=size(list) && toIndex<=size(list) && fromIndex<=toIndex){
-            node cursor =list.head;
+        if(fromIndex>=0 && toIndex>=0 && fromIndex<=size() && toIndex<=size() && fromIndex<=toIndex){
+            node cursor =head;
             int i=0;
             while(i<fromIndex){
                 i++;
                 cursor=cursor.next;
             }
             while(i<=toIndex){
-                sublist.add(sublist,cursor.data);
+                sublist.add(cursor.data);
                 i++;
                 cursor=cursor.next;
             }
@@ -164,10 +164,10 @@ public class Llist {
         }
         return sublist;
     }
-    public static boolean contains(Llist list,int key){
-        node cursor = list.head;
+    public  boolean contains(int key){
+        node cursor = head;
         boolean flag=false;
-        while(cursor.next != list.tail && !flag ){
+        while(cursor.next != null && !flag ){
             if(cursor.data == key){
                 flag = true;
             }
