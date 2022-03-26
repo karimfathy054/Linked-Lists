@@ -1,41 +1,42 @@
 package com.company;
 
-public class Dllist {
-    Dllist.node head;
-    Dllist.node tail;
+public class DoubleLlist {
+    node head;
+    node tail;
+
 
     static class node{
         int data;
-        Dllist.node next;
-        Dllist.node prev;
-
+        node next;
+        node prev;
         node(int k){
             data = k;
             next = null;
             prev = null;
         }
     }
-    public static int size(Dllist list){
+    public int size(){
         int size=0;
-        if (list.head != null) {
-            Dllist.node currentnode = list.head;
-            while (currentnode != list.tail) {
+        if (head != null) {
+            node currentnode = head;
+            while (currentnode != null) {
                 size++;
                 currentnode = currentnode.next;
             }
         }
         return size;
     }
-    public static void insert(Dllist list, int index, int data){
-        Dllist.node new_node = new Dllist.node(data);
-        if(index>=0 && index<= size(list)){
-            if(list.head == null){
-                list.head=new_node;
-                new_node.next=list.tail;
-                list.tail.prev=new_node;
+    public  void insert(int index, int data){
+        node new_node = new node(data);
+        if(index>=0 && index<= size()){
+            if(head == null){
+                head =new_node;
+                tail =new_node;
+                new_node.next=null;
+                new_node.prev =null;
             }
             else{
-                Dllist.node pos =list.head;
+                node pos = head;
                 int i=0;
                 while(i < index-1){
                     pos=pos.next;
@@ -43,8 +44,8 @@ public class Dllist {
                 }
                 new_node.next=pos.next;
                 new_node.prev=pos;
+                pos.next.prev=new_node;
                 pos.next=new_node;
-                new_node.next.prev=new_node;
 
             }
         }
@@ -53,28 +54,29 @@ public class Dllist {
         }
 
     }
-    public static void add(Dllist list , int data){
-        Dllist.node n2 = new Dllist.node(data);
-        if (list.head==null){
-            n2.prev = list.head;
-            n2.next = list.tail;
-            list.head.next = n2;
-            list.tail.prev = n2;
+    public  void add(int data){
+        node n2 = new node(data);
+        if (head==null && tail==null){
+            head=n2;
+            tail=n2;
+            n2.next= null;
+            n2.prev= null;
         }
         else{
-            n2.prev=list.tail.prev;
-            list.tail.prev=n2;
-            n2.next=list.tail;
+            n2.prev=tail;
+            n2.next=null;
+            tail.next=n2;
+            tail=n2;
         }
     }
-    public static void printList(Dllist list){
-        if(list.head==null){
+    public void printList(){
+        if(head==null){
             System.out.println("list is empty,can not be printed");
         }
         else{
-            Dllist.node n = list.head;
+            node n = head;
             System.out.print("linked list:");
-            while(n!=list.tail){
+            while(n!= null){
                 System.out.print(n.data + ", ");
                 n=n.next;
             }
@@ -82,12 +84,12 @@ public class Dllist {
         }
 
     }
-    public static int get (Dllist list,int index) {
+    public int get(int index) {
         {
-            Dllist.node cursor = list.head;
+            node cursor = head;
             int x = 0;
-            if (index >= 0 && index <= size(list)) {
-                if (list.head == null) {
+            if (index >= 0 && index <= size()) {
+                if (head == null) {
                     System.out.println("list is empty");
                 } else {
                     int i = 0;
@@ -103,11 +105,11 @@ public class Dllist {
             return x;
         }
     }
-    public static void set (Dllist list,int index,int data) {
+    public  void set (int index,int data) {
 
-        Dllist.node cursor = list.head;
-        if (index >= 0 && index <= size(list)) {
-            if (list.head == null) {
+        node cursor = head;
+        if (index >= 0 && index <= size()) {
+            if (head == null) {
                 System.out.println("list is empty");
             } else {
                 int i = 0;
@@ -122,18 +124,18 @@ public class Dllist {
         }
 
     }
-    public static void clear(Dllist list){
-        list.head=null;
-        list.tail.prev=null;
+    public  void clear(){
+        head=null;
+        tail=null;
     }
-    public static boolean isEmpty(Dllist list){
-        return (list.head==null);
+    public  boolean isEmpty( ){
+        return (head==null);
     }
-    public static void remove (Dllist list,int index){
+    public  void remove (int index){
 
-        Dllist.node cursor = list.head;
-        if (index >= 0 && index <= size(list)) {
-            if (list.head == null) {
+        node cursor = head;
+        if (index >= 0 && index <= size()) {
+            if (head == null) {
                 System.out.println("list is empty");
             } else {
                 int i = 0;
@@ -141,41 +143,41 @@ public class Dllist {
                     cursor = cursor.next;
                     i++;
                 }
-                cursor.prev.next = cursor.next;
-                cursor.next.prev = cursor.prev;
-                cursor.next =null;
-                cursor.prev =null;
 
+                cursor.prev.next=cursor.next;
+                cursor.next.prev=cursor.prev;
+                cursor.next=null;
+                cursor.prev=null;
             }
         } else {
             System.out.println("not a valid index");
         }
 
     }
-    public static Dllist sublist(Dllist list,int fromIndex,int toIndex){
-        Dllist sublist = new Dllist();
-        if(fromIndex>=0 && toIndex>=0 && fromIndex<=size(list) && toIndex<=size(list) && fromIndex<=toIndex){
-            Dllist.node cursor =list.head;
+    public DoubleLlist sublist(int fromIndex, int toIndex){
+        DoubleLlist sublist = new DoubleLlist();
+        if(fromIndex>=0 && toIndex>=0 && fromIndex<=size() && toIndex<=size() && fromIndex<=toIndex){
+            node cursor =head;
             int i=0;
             while(i<fromIndex){
                 i++;
                 cursor=cursor.next;
             }
             while(i<=toIndex){
-                sublist.add(sublist,cursor.data);
+                sublist.add(cursor.data);
                 i++;
                 cursor=cursor.next;
             }
         }
         else{
-            System.out.println("invalid indeces");
+            System.out.println("invalid indices");
         }
         return sublist;
     }
-    public static boolean contains(Dllist list,int key){
-        Dllist.node cursor = list.head;
+    public  boolean contains(int key){
+        node cursor = head;
         boolean flag=false;
-        while(cursor.next != list.tail && !flag ){
+        while(cursor.next != null && !flag ){
             if(cursor.data == key){
                 flag = true;
             }
